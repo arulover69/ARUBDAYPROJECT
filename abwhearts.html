@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&family=Nanum+Gothic:wght@800&family=Nanum+Myeongjo&display=swap" rel="stylesheet"> 
+
+   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> 
+
+	<head>
+		<title>HAPPY BIRTHDAY <3</title>
+		<style>
+		body	{
+		        background-image: url(abwpaperbg.jpg);
+		}
+			nav{
+				background-color: #9ea0ad;
+				font-family: 'Just Another Hand', cursive;
+				font-size: 30px;
+				letter-spacing: 2.5px; 
+		}
+		p{
+        font-family: 'Just Another Hand', cursive;
+        font-size: 30px;
+        }
+        h1{
+        font-family: 'Nanum Gothic', sans-serif;
+        font-size: 50px;
+        }
+		@keyframes heartfade {
+			0% {
+				opacity : 1;
+			}
+			50% {
+				opacity : 0;
+			}
+		}
+		.heart {
+			z-index : 999;
+			animation : heartfade 6s linear;
+			position : absolute; 
+		}
+		.heart:before,
+		.heart:after {
+			content : "";
+			background-color : #EF5350;
+			position : absolute;
+			height : 30px;
+			width : 45px;
+			border-radius : 15px 0px 0px 15px;
+		}
+
+		.heart:before {
+			transform : rotate(45deg);
+		}
+
+		.heart:after {
+			left : 10.5px;
+			transform : rotate(135deg);
+		}
+		</style>
+	</head>
+	<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+  <img src="lampp.jpg" width="4.4%" alt="">&nbsp;<a class="navbar-brand text-light" href="#" style="font-size: 34px;"> ARU'S BDAY WEBSITE!</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="abwmainpage.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="abwhitzen.html">Catch it</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="abwhearts.html">Hearts<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="abwletter.html">Letter</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+    </form>
+ </nav>
+ <br>
+ <center>
+ 	<h1>Hearts Hearts Hearts</h1>
+ 	<p>Step 1: Make sure your audio isn't muted then press play</p>
+ <audio controls autoplay muted>
+  <source src="y2mate.com - Last Train At 25 OClock.mp3" type="audio/mpeg">
+</audio>
+<br>
+<br>
+    <p>Step 2: Press Down or right click then move your mouse!</p>
+</center>
+	</body>
+	<script>
+		var brd = document.createElement("DIV");
+		document.body.insertBefore(brd, document.getElementById("board"));
+
+		const duration = 3000;
+		const speed = 0.5;
+		const cursorXOffset = 0;
+		const cursorYOffset = -5;
+
+		var hearts = [];
+		
+		function generateHeart(x, y, xBound, xStart, scale)
+		{
+			var heart = document.createElement("DIV");
+			heart.setAttribute('class', 'heart');
+			brd.appendChild(heart);
+			heart.time = duration;
+			heart.x = x;
+			heart.y = y;
+			heart.bound = xBound;
+			heart.direction = xStart;
+			heart.style.left = heart.x + "px";
+			heart.style.top = heart.y + "px";
+			heart.scale = scale;
+			heart.style.transform = "scale(" + scale + "," + scale + ")";
+			if(hearts == null)
+				hearts = [];
+			hearts.push(heart);
+			return heart;
+		}
+
+		var down = false;
+		var event = null;
+
+		document.onmousedown = function(e) {
+			down = true;
+			event = e;
+		}
+
+		document.onmouseup = function(e) {
+			down = false;
+		}
+
+		document.onmousemove = function(e) {
+			event = e;
+		}
+
+		document.ontouchstart = function(e) {
+			down = true;
+			event = e.touches[0];
+		}
+
+		document.ontouchend = function(e) {
+			down = false;
+		}
+
+		document.ontouchmove = function(e) {
+			event = e.touches[0];
+		}
+
+		var before = Date.now();
+		var id = setInterval(frame, 5);
+		var gr = setInterval(check, 100);
+
+		function frame()
+		{
+			var current = Date.now();
+			var deltaTime = current - before;
+			before = current;
+			for(i in hearts)
+			{
+				var heart = hearts[i];
+				heart.time -= deltaTime;
+				if(heart.time > 0)
+				{
+					heart.y -= speed;
+					heart.style.top = heart.y + "px";
+					heart.style.left = heart.x + heart.direction * heart.bound * Math.sin(heart.y * heart.scale / 30) / heart.y * 200 + "px";
+				}
+				else
+				{
+					heart.parentNode.removeChild(heart);
+					hearts.splice(i, 1);
+				}
+			}
+		}
+
+		function check()
+		{
+			if(down)
+			{
+				var start = 1 - Math.round(Math.random()) * 2;
+				var scale = Math.random() * Math.random() * 0.8 + 0.2;
+				var bound = 30 + Math.random() * 20;
+				generateHeart(event.pageX - brd.offsetLeft + cursorXOffset, event.pageY - brd.offsetTop + cursorYOffset, bound, start, scale);
+			}
+		}
+
+	</script>
+</html>
